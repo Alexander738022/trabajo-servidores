@@ -26,5 +26,5 @@ labels:
         - "traefik.http.services.alexander.loadbalancer.server.port=5000"
         - "traefik.docker.network=traefik-public"
 networks:
-traefik-public:
-external: true
+  traefik-public:
+    external: true
