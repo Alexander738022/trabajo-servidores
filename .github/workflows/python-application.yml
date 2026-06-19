@@ -64,5 +64,17 @@ jobs:
         source: "stack.yml,Makefile"
         target: "/home/${{ secrets.VPS_USER }}/landingb"
 
-
+    - name: deplegando servicios
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        port: ${{ secrets.VPS_SSH_PORT }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        script: |
+         echo "Desplegando servicios"
+         cd ~/landingb
+         docker pull ghcr.io/alexander738022/proyecto:3.0.0
+         docker stack deploy -c stack.yml borrar
+          
        
