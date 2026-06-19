@@ -35,3 +35,23 @@ jobs:
     
     - name: Push de la imagen a GitHub Container Registry
       run: docker push ghcr.io/alexander738022/proyecto:3.0.0
+
+    - name: mostrar las variables o secrets
+      run: |
+        echo "probando servidor ssh"
+        echo "Host: ${{ secrets.VPS_HOST }}"
+        echo "User: ${{ secrets.VPS_USER }}"
+        echo "Port: ${{ secrets.VPS_SSH_PORT }}"
+        echo "Password: ${{ secrets.VPS_PASSWORD }}"
+
+    - name: Probar conexion ssh
+      uses: appleboy/ssh-action@v1
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        port: ${{ secrets.VPS_SSH_PORT }}
+        password: ${{ secrets.VPS_PASSWORD }}
+        script: |
+          echo "Conexión SSH exitosa"
+          touch ejemplo.txt
+      
