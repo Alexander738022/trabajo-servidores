@@ -16,20 +16,22 @@ services:
       restart_policy:
         condition: on-failure
 
-      labels:
+labels:
         - "traefik.enable=true"
         - "traefik.http.routers.alexander.entrypoints=http"
         - "traefik.http.routers.alexander.rule=Host(`alexander.byronrm.com`)"
         - "traefik.http.middlewares.alexander-https-redirect.redirectscheme.scheme=https"
         - "traefik.http.routers.alexander.middlewares=alexander-https-redirect"
+        
+        # Router Seguro (HTTPS)
         - "traefik.http.routers.alexander-secure.entrypoints=https"
         - "traefik.http.routers.alexander-secure.rule=Host(`alexander.byronrm.com`)"
         - "traefik.http.routers.alexander-secure.tls=true"
         - "traefik.http.routers.alexander-secure.tls.certresolver=http"
-        - "traefik.http.routers.alexander-secure.service=alexander"
-        - "traefik.http.services.alexander.loadbalancer.server.port=5000"
+        
+        # Configuración del puerto (Apunta directamente al puerto 5000 de Flask)
+        - "traefik.http.services.alexander-secure.loadbalancer.server.port=5000"
         - "traefik.docker.network=traefik-public"
-
 networks:
   traefik-public:
     external: true
